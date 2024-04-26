@@ -73,6 +73,7 @@ RUN tar -xvf /toolchain/src/src/archives/hidapi-0.14.0.tar.gz -C /toolchain/src/
 RUN mv /toolchain/src/src/hidapi-hidapi-0.14.0 /toolchain/src/src/hidapi
 
 RUN git clone https://github.com/flipperdevices/openocd.git /toolchain/src/src/openocd
+RUN cd /toolchain/src/src/openocd && git reset --hard 708504d4b8094d00746df06cecb5fa6e7c2852d3
 
 ADD scripts/build-windows-flipper-tools.sh /toolchain/src/
 RUN bash /toolchain/src/build-windows-flipper-tools.sh
