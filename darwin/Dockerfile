@@ -75,8 +75,9 @@ RUN mv /toolchain/src/src/libusb-1.0.24 /toolchain/src/src/libusb
 ADD https://github.com/libusb/hidapi/archive/refs/tags/hidapi-0.14.0.tar.gz /toolchain/src/src/archives/
 RUN tar -xvf /toolchain/src/src/archives/hidapi-0.14.0.tar.gz -C /toolchain/src/src/
 RUN mv /toolchain/src/src/hidapi-hidapi-0.14.0 /toolchain/src/src/hidapi
-RUN git clone https://github.com/flipperdevices/openocd.git /toolchain/src/src/openocd
-RUN bash -c "cd /toolchain/src/src/openocd && git reset --hard 708504d4b8094d00746df06cecb5fa6e7c2852d3"
+
+RUN bash -c "git clone https://github.com/flipperdevices/openocd.git /toolchain/src/src/openocd && cd /toolchain/src/src/openocd && git reset --hard 708504d4b8094d00746df06cecb5fa6e7c2852d3"
+
 ADD scripts/build-mac-flipper-tools.sh /toolchain/src/
 RUN bash /toolchain/src/build-mac-flipper-tools.sh
 ADD scripts/relink.sh /usr/bin/
