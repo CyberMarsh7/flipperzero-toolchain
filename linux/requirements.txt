@@ -27,7 +27,6 @@ protobuf==4.25.3
 pycparser==2.22
 pyelftools==0.31
 pyserial==3.5
-python3-protobuf==2.5.0
 PyYAML==6.0.1
 reedsolo==1.7.0
 requests==2.32.3
