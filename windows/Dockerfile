@@ -31,7 +31,7 @@ RUN bash /toolchain/src/build-windows-gcc.sh
 
 FROM flipperzero-toolchain-windows-build-deps AS flipperzero-toolchain-windows-python
 RUN DEBIAN_FRONTEND=noninteractive dpkg --add-architecture i386 && apt update && apt -y install xvfb wine wine32 wine64 unzip
-ADD https://www.python.org/ftp/python/3.11.2/python-3.11.2-amd64.exe /toolchain/src/src/archives
+ADD https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe /toolchain/src/src/archives
 ADD scripts/unpack-windows-python-wine.sh /toolchain/src/
 RUN bash /toolchain/src/unpack-windows-python-wine.sh
 
@@ -51,18 +51,18 @@ RUN rsync -azv /tmp/cmake-3.28.0-linux-x86_64/ /usr
 ADD https://github.com/protocolbuffers/protobuf/releases/download/v21.7/protobuf-cpp-3.21.7.tar.gz /toolchain/src/src/archives/
 RUN tar -xvf /toolchain/src/src/archives/protobuf-cpp-3.21.7.tar.gz -C /toolchain/src/src/
 RUN mv /toolchain/src/src/protobuf-3.21.7 /toolchain/src/src/protobuf
-ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/llvm-17.0.6.src.tar.xz /toolchain/src/src/archives/
+ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/llvm-18.1.8.src.tar.xz /toolchain/src/src/archives/
 RUN mkdir -p /toolchain/src/src/clang-format
-RUN tar -xvf /toolchain/src/src/archives/llvm-17.0.6.src.tar.xz -C /toolchain/src/src/clang-format
-ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/clang-17.0.6.src.tar.xz /toolchain/src/src/archives/
-RUN tar -xvf /toolchain/src/src/archives/clang-17.0.6.src.tar.xz -C /toolchain/src/src/clang-format/llvm-17.0.6.src/tools/
-RUN mv /toolchain/src/src/clang-format/llvm-17.0.6.src/tools/clang-17.0.6.src /toolchain/src/src/clang-format/llvm-17.0.6.src/tools/clang
-ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/cmake-17.0.6.src.tar.xz /toolchain/src/src/archives/
-RUN tar -xvf /toolchain/src/src/archives/cmake-17.0.6.src.tar.xz -C /toolchain/src/src/clang-format/
-RUN mv /toolchain/src/src/clang-format/cmake-17.0.6.src /toolchain/src/src/clang-format/cmake
-ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/third-party-17.0.6.src.tar.xz /toolchain/src/src/archives/
-RUN tar -xvf /toolchain/src/src/archives/third-party-17.0.6.src.tar.xz -C /toolchain/src/src/clang-format/
-RUN mv /toolchain/src/src/clang-format/third-party-17.0.6.src /toolchain/src/src/clang-format/third-party
+RUN tar -xvf /toolchain/src/src/archives/llvm-18.1.8.src.tar.xz -C /toolchain/src/src/clang-format
+ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/clang-18.1.8.src.tar.xz /toolchain/src/src/archives/
+RUN tar -xvf /toolchain/src/src/archives/clang-18.1.8.src.tar.xz -C /toolchain/src/src/clang-format/llvm-18.1.8.src/tools/
+RUN mv /toolchain/src/src/clang-format/llvm-18.1.8.src/tools/clang-18.1.8.src /toolchain/src/src/clang-format/llvm-18.1.8.src/tools/clang
+ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/cmake-18.1.8.src.tar.xz /toolchain/src/src/archives/
+RUN tar -xvf /toolchain/src/src/archives/cmake-18.1.8.src.tar.xz -C /toolchain/src/src/clang-format/
+RUN mv /toolchain/src/src/clang-format/cmake-18.1.8.src /toolchain/src/src/clang-format/cmake
+ADD https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.8/third-party-18.1.8.src.tar.xz /toolchain/src/src/archives/
+RUN tar -xvf /toolchain/src/src/archives/third-party-18.1.8.src.tar.xz -C /toolchain/src/src/clang-format/
+RUN mv /toolchain/src/src/clang-format/third-party-18.1.8.src /toolchain/src/src/clang-format/third-party
 
 ADD https://github.com/libusb/libusb/releases/download/v1.0.24/libusb-1.0.24.tar.bz2 /toolchain/src/src/archives/
 RUN tar -xvf /toolchain/src/src/archives/libusb-1.0.24.tar.bz2 -C /toolchain/src/src/

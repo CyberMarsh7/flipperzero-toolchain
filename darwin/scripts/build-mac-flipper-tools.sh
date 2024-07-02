@@ -85,7 +85,7 @@ function build_clang_format_x86_64() {
         CFLAGS="$MAC_X86_64_FLAGS" \
         LDFLAGS="$MAC_X86_64_FLAGS" \
         cmake \
-            -S /toolchain/src/src/clang-format/llvm-17.0.6.src \
+            -S /toolchain/src/src/clang-format/llvm-18.1.8.src \
             -B build \
             -DLLVM_INCLUDE_BENCHMARKS=OFF \
             -DCMAKE_BUILD_TYPE=Release \
@@ -118,7 +118,7 @@ function build_clang_format_arm64() {
         CFLAGS="$MAC_ARM64_FLAGS" \
         LDFLAGS="$MAC_ARM64_FLAGS" \
         cmake \
-            -S /toolchain/src/src/clang-format/llvm-17.0.6.src \
+            -S /toolchain/src/src/clang-format/llvm-18.1.8.src \
             -B build \
             -DLLVM_INCLUDE_BENCHMARKS=OFF \
             -DCMAKE_BUILD_TYPE=Release \

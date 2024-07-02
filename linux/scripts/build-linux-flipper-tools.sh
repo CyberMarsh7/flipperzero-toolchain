@@ -41,7 +41,7 @@ function build_clang_format() {
     mkdir -p "$LINUX_CONFIGURE_ROOT/clang-format";
     pushd "$LINUX_CONFIGURE_ROOT/clang-format";
     cmake -S \
-        /toolchain/src/src/clang-format/llvm-17.0.6.src \
+        /toolchain/src/src/clang-format/llvm-18.1.8.src \
         -B build \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DCMAKE_BUILD_TYPE=Release \
