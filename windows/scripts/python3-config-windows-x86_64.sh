@@ -24,7 +24,7 @@ while [ $# -ge 1 ]; do
       fi
       echo "$CF";;
     --libs|--ldflags)
-      echo "-L$PYTHON_PATH/libs -lpython311";;
+      echo "-L$PYTHON_PATH/libs -lpython312";;
     --*)
       echo "Unknown option: $OP" >&2
       exit 1;;
