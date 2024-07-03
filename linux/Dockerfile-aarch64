@@ -13,9 +13,9 @@ ADD scripts/build-linux-gcc-build-libs.sh /toolchain/src/
 RUN bash /toolchain/src/build-linux-gcc-build-libs.sh
 
 FROM flipperzero-toolchain-linux-build-deps AS flipperzero-toolchain-linux-python-build-libs
-ADD https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz /toolchain/src/src/archives/
-RUN tar -xvf /toolchain/src/src/archives/Python-3.12.4.tgz -C /toolchain/src/src/
-RUN mv /toolchain/src/src/Python-3.12.4 /toolchain/src/src/python
+ADD https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz /toolchain/src/src/archives/
+RUN tar -xvf /toolchain/src/src/archives/Python-3.11.9.tgz -C /toolchain/src/src/
+RUN mv /toolchain/src/src/Python-3.11.9 /toolchain/src/src/python
 ADD https://www.openssl.org/source/openssl-1.1.1w.tar.gz /toolchain/src/src/archives/
 RUN tar -xvf /toolchain/src/src/archives/openssl-1.1.1w.tar.gz -C /toolchain/src/src/
 RUN mv /toolchain/src/src/openssl-1.1.1w /toolchain/src/src/openssl

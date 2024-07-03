@@ -11,9 +11,9 @@ RUN bash /toolchain/src/build-mac-binutils.sh
 
 FROM MacOSVenturaWithBrew AS flipperzero-toolchain-python
 RUN brew install coreutils
-ADD https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz /toolchain/src/src/archives/
-RUN tar -xvf /toolchain/src/src/archives/Python-3.12.4.tgz -C /toolchain/src/src/
-RUN mv /toolchain/src/src/Python-3.12.4 /toolchain/src/src/python
+ADD https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz /toolchain/src/src/archives/
+RUN tar -xvf /toolchain/src/src/archives/Python-3.11.9.tgz -C /toolchain/src/src/
+RUN mv /toolchain/src/src/Python-3.11.9 /toolchain/src/src/python
 ADD https://www.openssl.org/source/openssl-1.1.1w.tar.gz /toolchain/src/src/archives/
 RUN tar -xvf /toolchain/src/src/archives/openssl-1.1.1w.tar.gz -C /toolchain/src/src/
 RUN mv /toolchain/src/src/openssl-1.1.1w /toolchain/src/src/openssl

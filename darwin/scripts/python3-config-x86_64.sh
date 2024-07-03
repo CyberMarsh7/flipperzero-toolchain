@@ -7,9 +7,9 @@ while [ $# -ge 1 ]; do
     OP="$1"
     case $OP in
         --libs|--ldflags)
-            echo "$("$MAC_X86_64_OUTPUT_ROOT/bin/python3.12-config" "$OP" --embed) -L$MAC_X86_64_OUTPUT_ROOT/lib";;
+            echo "$("$MAC_X86_64_OUTPUT_ROOT/bin/python3.11-config" "$OP" --embed) -L$MAC_X86_64_OUTPUT_ROOT/lib";;
         --*)
-            echo "$("$MAC_X86_64_OUTPUT_ROOT/bin/python3.12-config" "$OP")";;
+            echo "$("$MAC_X86_64_OUTPUT_ROOT/bin/python3.11-config" "$OP")";;
         *)
             ;;
     esac

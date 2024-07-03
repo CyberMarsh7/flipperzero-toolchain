@@ -24,7 +24,7 @@ function setup_wine() {
 }
 function unpack_python() {
     pushd /toolchain/src/src/archives;
-    DISPLAY=:0.0 WINEARCH=win64 wine cmd /c python-3.12.4-amd64.exe /quiet PrependPath=1 InstallAllUsers=1 TargetDir=C:\\Python
+    DISPLAY=:0.0 WINEARCH=win64 wine cmd /c python-3.11.9-amd64.exe /quiet PrependPath=1 InstallAllUsers=1 TargetDir=C:\\Python
     popd;
 }
 function move_python_files() {

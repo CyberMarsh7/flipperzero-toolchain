@@ -31,7 +31,7 @@ RUN bash /toolchain/src/build-windows-gcc.sh
 
 FROM flipperzero-toolchain-windows-build-deps AS flipperzero-toolchain-windows-python
 RUN DEBIAN_FRONTEND=noninteractive dpkg --add-architecture i386 && apt update && apt -y install xvfb wine wine32 wine64 unzip
-ADD https://www.python.org/ftp/python/3.12.4/python-3.12.4-amd64.exe /toolchain/src/src/archives
+ADD https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe /toolchain/src/src/archives
 ADD scripts/unpack-windows-python-wine.sh /toolchain/src/
 RUN bash /toolchain/src/unpack-windows-python-wine.sh
 
@@ -95,5 +95,5 @@ ADD scripts/bundle_upload.sh /usr/bin/
 RUN strip.sh
 COPY --from=flipperzero-toolchain-windows-src /usr/x86_64-w64-mingw32/lib /tmp/lib/
 RUN cp /tmp/lib/*.dll /toolchain/windows-output-root/bin/
-RUN cp /toolchain/windows-output-root/python/python312.dll /toolchain/windows-output-root/bin/
-ADD patch/python312._pth /toolchain/windows-output-root/bin/
+RUN cp /toolchain/windows-output-root/python/python311.dll /toolchain/windows-output-root/bin/
+ADD patch/python311._pth /toolchain/windows-output-root/bin/
