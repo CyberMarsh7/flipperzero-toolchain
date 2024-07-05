@@ -37,3 +37,5 @@ smmap==5.0.1
 typing_extensions==4.12.2
 urllib3==2.2.2
 setuptools==70.1.1
+mslex==1.2.0
+oslex==0.1.3
