@@ -36,25 +36,34 @@ function build_protobuf() {
     cleanup_relink "$LINUX_OUTPUT_ROOT";
 }
 
-function build_clang_format() {
-    rm -rf "$LINUX_CONFIGURE_ROOT/clang-format";
-    mkdir -p "$LINUX_CONFIGURE_ROOT/clang-format";
-    pushd "$LINUX_CONFIGURE_ROOT/clang-format";
+function build_llvm() {
+    rm -rf "$LINUX_CONFIGURE_ROOT/llvm";
+    mkdir -p "$LINUX_CONFIGURE_ROOT/llvm";
+    pushd "$LINUX_CONFIGURE_ROOT/llvm";
     cmake -S \
-        /toolchain/src/src/clang-format/llvm-18.1.8.src \
+        /toolchain/src/src/llvm/llvm-18.1.8.src \
         -B build \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$LINUX_OUTPUT_ROOT" \
-        -DLLVM_EXTERNAL_PROJECTS=clang;
+        "-DLLVM_EXTERNAL_PROJECTS=clang;clang-tools-extra" \
+        "-DLLVM_TARGETS_TO_BUILD=ARM";
     cmake \
         --build build \
         --target clang-format \
         "-j$CPUS";
     cmake \
+        --build build \
+        --target clangd \
+        "-j$CPUS";
+    cmake \
         --install build \
         --strip \
         --component clang-format;
+    cmake \
+        --install build \
+        --strip \
+        --component clangd;
     popd;
 }
 
@@ -126,7 +135,7 @@ function build_openocd() {
 }
 
 build_protobuf;
-build_clang_format;
+build_llvm;
 copy_libudev;
 build_libusb;
 build_hidapi;

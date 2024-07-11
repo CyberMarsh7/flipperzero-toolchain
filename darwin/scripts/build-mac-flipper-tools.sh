@@ -76,22 +76,23 @@ function build_protobuf_arm64() {
     popd;
 }
 
-function build_clang_format_x86_64() {
-    rm -rf "$MAC_X86_64_CONFIGURE_ROOT/clang-format";
-    mkdir -p "$MAC_X86_64_CONFIGURE_ROOT/clang-format";
-    pushd "$MAC_X86_64_CONFIGURE_ROOT/clang-format";
+function build_llvm_x86_64() {
+    rm -rf "$MAC_X86_64_CONFIGURE_ROOT/llvm";
+    mkdir -p "$MAC_X86_64_CONFIGURE_ROOT/llvm";
+    pushd "$MAC_X86_64_CONFIGURE_ROOT/llvm";
     CPPFLAGS="$MAC_X86_64_FLAGS" \
         CXXFLAGS="$MAC_X86_64_FLAGS" \
         CFLAGS="$MAC_X86_64_FLAGS" \
         LDFLAGS="$MAC_X86_64_FLAGS" \
         cmake \
-            -S /toolchain/src/src/clang-format/llvm-18.1.8.src \
+            -S /toolchain/src/src/llvm/llvm-18.1.8.src \
             -B build \
             -DLLVM_INCLUDE_BENCHMARKS=OFF \
             -DCMAKE_BUILD_TYPE=Release \
             "-DCMAKE_INSTALL_PREFIX=$MAC_X86_64_OUTPUT_ROOT" \
-            -DLLVM_EXTERNAL_PROJECTS=clang \
-            -DCMAKE_OSX_ARCHITECTURES=x86_64;
+            "-DLLVM_EXTERNAL_PROJECTS=clang;clang-tools-extra" \
+            -DCMAKE_OSX_ARCHITECTURES=x86_64 \
+            "-DLLVM_TARGETS_TO_BUILD=ARM";
     CPPFLAGS="$MAC_X86_64_FLAGS" \
         CXXFLAGS="$MAC_X86_64_FLAGS" \
         CFLAGS="$MAC_X86_64_FLAGS" \
@@ -102,29 +103,44 @@ function build_clang_format_x86_64() {
             "--target" \
             "clang-format" \
             "-j$CPUS";
+    CPPFLAGS="$MAC_X86_64_FLAGS" \
+        CXXFLAGS="$MAC_X86_64_FLAGS" \
+        CFLAGS="$MAC_X86_64_FLAGS" \
+        LDFLAGS="$MAC_X86_64_FLAGS"\
+        cmake \
+            "--build" \
+            "build" \
+            "--target" \
+            "clangd" \
+            "-j$CPUS";
     cmake \
         --install build \
         --strip \
         --component clang-format;
+    cmake \
+        --install build \
+        --strip \
+        --component clangd;
     popd;
 }
 
-function build_clang_format_arm64() {
-    rm -rf "$MAC_ARM64_CONFIGURE_ROOT/clang-format";
-    mkdir -p "$MAC_ARM64_CONFIGURE_ROOT/clang-format";
-    pushd "$MAC_ARM64_CONFIGURE_ROOT/clang-format";
+function build_llvm_arm64() {
+    rm -rf "$MAC_ARM64_CONFIGURE_ROOT/llvm";
+    mkdir -p "$MAC_ARM64_CONFIGURE_ROOT/llvm";
+    pushd "$MAC_ARM64_CONFIGURE_ROOT/llvm";
     CPPFLAGS="$MAC_ARM64_FLAGS" \
         CXXFLAGS="$MAC_ARM64_FLAGS" \
         CFLAGS="$MAC_ARM64_FLAGS" \
         LDFLAGS="$MAC_ARM64_FLAGS" \
         cmake \
-            -S /toolchain/src/src/clang-format/llvm-18.1.8.src \
+            -S /toolchain/src/src/llvm/llvm-18.1.8.src \
             -B build \
             -DLLVM_INCLUDE_BENCHMARKS=OFF \
             -DCMAKE_BUILD_TYPE=Release \
             "-DCMAKE_INSTALL_PREFIX=$MAC_ARM64_OUTPUT_ROOT" \
-            -DLLVM_EXTERNAL_PROJECTS=clang \
-            -DCMAKE_OSX_ARCHITECTURES=arm64;
+            "-DLLVM_EXTERNAL_PROJECTS=clang;clang-tools-extra" \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
+            "-DLLVM_TARGETS_TO_BUILD=ARM";
     CPPFLAGS="$MAC_ARM64_FLAGS" \
         CXXFLAGS="$MAC_ARM64_FLAGS" \
         CFLAGS="$MAC_ARM64_FLAGS" \
@@ -135,10 +151,24 @@ function build_clang_format_arm64() {
             "--target" \
             "clang-format" \
             "-j$CPUS";
+    CPPFLAGS="$MAC_ARM64_FLAGS" \
+        CXXFLAGS="$MAC_ARM64_FLAGS" \
+        CFLAGS="$MAC_ARM64_FLAGS" \
+        LDFLAGS="$MAC_ARM64_FLAGS"\
+        cmake \
+            "--build" \
+            "build" \
+            "--target" \
+            "clangd" \
+            "-j$CPUS";
     cmake \
         --install build \
         --strip \
         --component clang-format;
+    cmake \
+        --install build \
+        --strip \
+        --component clangd;
     popd;
 }
 
@@ -352,8 +382,8 @@ function build_openocd_arm64() {
 
 build_protobuf_x86_64;
 build_protobuf_arm64;
-build_clang_format_x86_64;
-build_clang_format_arm64;
+build_llvm_x86_64;
+build_llvm_arm64;
 build_libusb_x86_64;
 build_libusb_arm64;
 build_hidapi_x86_64;

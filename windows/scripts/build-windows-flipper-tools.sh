@@ -30,17 +30,18 @@ function build_protobuf() {
     popd;
 }
 
-function build_clang_format() {
-    rm -rf "$WINDOWS_CONFIGURE_ROOT/clang-format";
-    mkdir -p "$WINDOWS_CONFIGURE_ROOT/clang-format";
-    pushd "$WINDOWS_CONFIGURE_ROOT/clang-format";
+function build_llvm() {
+    rm -rf "$WINDOWS_CONFIGURE_ROOT/llvm";
+    mkdir -p "$WINDOWS_CONFIGURE_ROOT/llvm";
+    pushd "$WINDOWS_CONFIGURE_ROOT/llvm";
     cmake -S \
-        /toolchain/src/src/clang-format/llvm-18.1.8.src \
+        /toolchain/src/src/llvm/llvm-18.1.8.src \
         -B build \
         -DLLVM_INCLUDE_BENCHMARKS=OFF \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$WINDOWS_OUTPUT_ROOT" \
-        -DLLVM_EXTERNAL_PROJECTS=clang \
+        "-DLLVM_EXTERNAL_PROJECTS=clang;clang-tools-extra" \
+        "-DLLVM_TARGETS_TO_BUILD=ARM" \
         -DCMAKE_SYSTEM_NAME=Windows \
         -DCMAKE_RC_COMPILER=x86_64-w64-mingw32-windres \
         -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
@@ -56,9 +57,17 @@ function build_clang_format() {
         --target clang-format \
         "-j$CPUS";
     cmake \
+        --build build \
+        --target clangd \
+        "-j$CPUS";
+    cmake \
         --install build \
         --strip \
         --component clang-format;
+    cmake \
+        --install build \
+        --strip \
+        --component clangd;
 }
 
 function build_libusb() {
@@ -144,7 +153,7 @@ function cleanup() {
 }
 
 build_protobuf;
-build_clang_format;
+build_llvm;
 build_libusb;
 build_hidapi;
 build_openocd;
