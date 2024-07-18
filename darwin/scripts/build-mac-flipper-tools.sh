@@ -121,6 +121,10 @@ function build_llvm_x86_64() {
         --install build \
         --strip \
         --component clangd;
+
+    # adding clangd headers
+    cp -r "$MAC_X86_64_CONFIGURE_ROOT/llvm/build/lib/clang" "$MAC_X86_64_OUTPUT_ROOT/lib/";
+
     popd;
 }
 
@@ -169,6 +173,10 @@ function build_llvm_arm64() {
         --install build \
         --strip \
         --component clangd;
+
+    # adding clangd headers
+    cp -r "$MAC_ARM64_CONFIGURE_ROOT/llvm/build/lib/clang" "$MAC_ARM64_OUTPUT_ROOT/lib/";
+
     popd;
 }
 

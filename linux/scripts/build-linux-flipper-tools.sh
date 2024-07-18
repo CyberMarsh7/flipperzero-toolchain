@@ -64,6 +64,10 @@ function build_llvm() {
         --install build \
         --strip \
         --component clangd;
+
+    # adding clangd headers
+    cp -r "$LINUX_CONFIGURE_ROOT/llvm/build/lib/clang" "$LINUX_OUTPUT_ROOT/lib/";
+
     popd;
 }
 

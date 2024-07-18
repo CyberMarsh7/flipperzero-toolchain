@@ -68,6 +68,9 @@ function build_llvm() {
         --install build \
         --strip \
         --component clangd;
+
+    # adding clangd headers
+    cp -r "$WINDOWS_CONFIGURE_ROOT/llvm/build/lib/clang" "$WINDOWS_OUTPUT_ROOT/lib/";
 }
 
 function build_libusb() {
