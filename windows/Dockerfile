@@ -91,8 +91,8 @@ COPY --from=flipperzero-toolchain-windows-gdb /toolchain/windows-output-root /to
 COPY --from=flipperzero-toolchain-windows-gcc /toolchain/windows-output-root /toolchain/windows-output-root
 COPY --from=flipperzero-toolchain-windows-tools /toolchain/windows-output-root /toolchain/windows-output-root
 ADD requirements.txt /toolchain/
-RUN wine /toolchain/windows-output-root/python/python.exe -m pip install --upgrade pip
-RUN wine /toolchain/windows-output-root/python/python.exe -m pip install -r /toolchain/requirements.txt
+RUN wine /toolchain/windows-output-root/python/python.exe -m pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org install --upgrade pip
+RUN wine /toolchain/windows-output-root/python/python.exe -m pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org install -r /toolchain/requirements.txt
 ADD scripts/strip.sh /usr/bin/
 ADD scripts/bundle_upload.sh /usr/bin/
 RUN strip.sh
