@@ -46,6 +46,7 @@ function check_object() {
 
 function relink_object() {
     local OBJECT;
+    local OBJECT_NAME;
     local LIB_CURRENT_FULL_PATH;
     local LIB_NAME;
     local LIB_PATH;
@@ -54,15 +55,20 @@ function relink_object() {
     local LIB_REL_PATH;
     OBJECT="$1";
     LIB_CURRENT_FULL_PATH="$2";
-    LIB_FIND_PATH="$DIRECTORY";
+    OBJECT_NAME="$(basename "$OBJECT")";
     LIB_NAME="$(basename "$LIB_CURRENT_FULL_PATH")";
+    LIB_FIND_PATH="$DIRECTORY";
     echo -e "\tINSTALL_NAME_TOOL\t$OBJECT\t$LIB_NAME";
     LIB_PATH=$(find -L "$LIB_FIND_PATH" -type f ! -size 0 -name "$LIB_NAME" | head -n 1);
     if [[ ! -f "$LIB_PATH" ]]; then
+        if [[ "$LIB_NAME" == *$OBJECT_NAME ]]; then  # special case for id like "dir1.dir2.lib_name"
+            echo "WARNING: librarry $LIB_NAME has a non-standard id, skipping!";
+            return;
+        fi
         echo "ERROR: librarry $LIB_NAME for $OBJECT not found in $LIB_FIND_PATH";
         exit 1;
     fi
-    if [[ "$LIB_NAME" == "$(basename "$OBJECT")" ]]; then
+    if [[ "$LIB_NAME" == "$OBJECT_NAME" ]]; then
         #install_name_tool -id "@loader_path/$LIB_NAME" "$OBJECT";
         echo "WARNING: id of librarry $LIB_NAME doesn't changed!";
     else
