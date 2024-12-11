@@ -1,4 +1,4 @@
-FROM debian:11 as flipperzero-toolchain-windows-src
+FROM debian:11 AS flipperzero-toolchain-windows-src
 ADD https://developer.arm.com/-/media/Files/downloads/gnu/12.3.rel1/srcrel/arm-gnu-toolchain-src-snapshot-12.3.rel1.tar.xz /toolchain/src/src/archives/
 RUN DEBIAN_FRONTEND=noninteractive apt update && apt -y install build-essential xz-utils m4 bison flex texinfo file patchelf
 ADD https://github.com/xpack-dev-tools/mingw-w64-gcc-xpack/releases/download/v12.3.0-1/xpack-mingw-w64-gcc-12.3.0-1-linux-x64.tar.gz /toolchain/src/src/archives/
@@ -99,4 +99,5 @@ RUN strip.sh
 COPY --from=flipperzero-toolchain-windows-src /usr/x86_64-w64-mingw32/lib /tmp/lib/
 RUN cp /tmp/lib/*.dll /toolchain/windows-output-root/bin/
 RUN cp /toolchain/windows-output-root/python/python311.dll /toolchain/windows-output-root/bin/
+RUN cp /toolchain/windows-output-root/bin/libwinpthread-1.dll /toolchain/windows-output-root/libexec/gcc/arm-none-eabi/12.3.1/
 ADD patch/python311._pth /toolchain/windows-output-root/bin/

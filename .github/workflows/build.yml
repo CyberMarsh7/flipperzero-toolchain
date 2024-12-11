@@ -32,7 +32,9 @@ jobs:
 
       - name: 'Build linux toolchain x86_64'
         run: |
-          docker build -t flipperzero-toolchain-linux:${IMAGE_TAG} -f linux/Dockerfile-x86_64 linux
+          docker build -t flipperzero-toolchain-linux:${IMAGE_TAG} \
+                -t flipperzero-toolchain-linux:latest \
+                -f linux/Dockerfile-x86_64 linux
 
       - name: 'Bundle and upload linux toolchain x86_64'
         #if: ${{ steps.tag.outputs.image_tag != '0' }}
